@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<!--version 1.1.0-->
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>五子棋v1.1.0</title>
+    <script>
+        var player = true;//true为黑，false为白，默认黑先
+        function load() { //生成棋盘，显示信息
+            var i = 1, j = 1;
+            var imax = parseInt(document.getElementById("sizey").value);
+            var jmax = parseInt(document.getElementById("sizex").value);
+            document.getElementById("startbtn").disabled = true;
+            document.getElementById("stopbtn").disabled = false;
+            document.getElementById("sizex").disabled = true;
+            document.getElementById("sizey").disabled = true;
+            var outstr = "";
+            for (i = 1; i <= imax; i++) {
+                outstr += "<tr>";
+                for (j = 1; j < jmax; j++) {
+                    outstr += '<td id="' + j + ',' + (10 - i + 1) + '">';
+                    outstr += '<input type="button" value="落子" onclick="luozi(' + j + ',' + (10 - i + 1) + ')">';
+                    outstr += '</td>';
+                }
+                outstr += "</tr>";
+            }
+            document.getElementById("qipan").innerHTML = outstr;
+            outstr2 = '当前棋手: <span id="outplayer" style="color:#ff6a00;font-size:25px">黑</span>';
+            document.getElementById("outplayerarea").innerHTML = outstr2;
+        }
+        function luozi(x, y) {
+            var getblock = document.getElementById(x + "," + y);
+            var outarea = document.getElementById("outplayer");
+            if (player) {
+                getblock.innerHTML = '<img src="black.png">';
+                outarea.innerHTML = "白";
+
+            } else {
+                getblock.innerHTML = '<img src="white.png">';
+                outarea.innerHTML = "黑";
+            }
+            player = !player;
+        }
+        function stopthisgame() {
+            if (!confirm("确定要终止本轮游戏吗？棋盘数据将不会保存。")) {
+                return;
+            }
+            document.getElementById("startbtn").disabled = false;
+            document.getElementById("stopbtn").disabled = true;
+            document.getElementById("sizex").disabled = false;
+            document.getElementById("sizey").disabled = false;
+            document.getElementById("qipan").innerHTML = "<tr><td>本轮游戏被主动终止，请重新开始游戏</td></tr>";
+        }
+    </script>
+    <style>
+    #qipan {
+        border-collapse: collapse;
+    }
+    #qipan td {
+        border: 1px solid black;
+    }
+    #qipan td input{
+        margin: 2px;
+    }
+    #qipan td img{
+        margin: auto;
+    }
+    </style>
+</head>
+<body>
+    <b style="font-size:25px;">五子棋</b><hr>
+    输入棋盘宽度：<input type="text" id="sizex"><br>
+    输入棋盘高度：<input type="text" id="sizey"><br>
+    <input type="button" id="startbtn" value="开始" onclick="load()"><hr>
+    <input type="button" id="stopbtn" value="终止本轮游戏" onclick="stopthisgame()" disabled><br><br>
+    <table id="qipan"></table>
+    <div>
+        <b id="outplayerarea"></b>
+    </div>
+</body>
+</html>
