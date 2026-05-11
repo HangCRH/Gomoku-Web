@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <title>五子棋v1.0.0</title>
+    <script>
+        var player = true;//true为黑，false为白，默认黑先
+        function loadele() { //生成棋盘
+            var i = 1, j = 1;
+            var outstr = "";
+            for (i = 1; i <= 15; i++) {
+                outstr += "<tr>";
+                for (j = 1; j < 15; j++) {
+                    outstr += '<td id="' + j + ',' + (10 - i + 1) + '">';
+                    outstr += '<input type="button" value="落子" onclick="luozi(' + j + ',' + (10 - i + 1) + ')">';
+                    outstr += '</td>';
+                }
+                outstr += "</tr>";
+            }
+            document.getElementById("qipan").innerHTML = outstr;
+        }
+        function luozi(x, y) {
+            var getblock = document.getElementById(x + "," + y);
+            if (player) {
+                getblock.innerHTML = '<img src="black.png">';
+            } else {
+                getblock.innerHTML = '<img src="white.png">';
+            }
+            player = !player;
+        }
+    </script>
+    <style>
+    #qipan {
+        border-collapse: collapse;
+    }
+    #qipan td {
+        border: 1px solid black;
+    }
+    #qipan td *{
+        margin: 2px;
+    }
+    </style>
+</head>
+<body onload="loadele()">
+    <b style="font-size:25px;">五子棋</b><hr>
+    <table id="qipan"></table>
+</body>
+</html>
