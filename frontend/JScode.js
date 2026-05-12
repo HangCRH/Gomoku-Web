@@ -51,20 +51,22 @@ function luozi(x, y) {
         getblock.innerHTML = '<img src="white.png">';
         outstring = "黑";
     }
-    gamedata[x - 1][imax - y] = player;
+    gamedata[imax - y][x - 1] = player;
     console.log(gamedata);
     //胜负检测
-    var winner = testwinner(x - 1, imax - y);
+    var winner = testwinner(imax - y, x - 1);
     if (winner && player) {
         alert("黑方赢了！");
         document.getElementById("outarea2").innerHTML = "黑方最后落子，取得胜利！";
         outarea.innerHTML = player ? "黑" : "白";
+        stopthisgame(false);
         return;
     }
     if (winner && !player) {
         alert("白方赢了！");
         document.getElementById("outarea2").innerHTML = "白方最后落子，取得胜利！";
         outarea.innerHTML = player ? "黑" : "白";
+        stopthisgame(false);
         return;
     }
     player = !player;
@@ -87,7 +89,7 @@ function testwinner(a, b) {
         }
     }
     i = a + 1, j = b + 1;
-    for (; i <= imax && j <= jmax; i++, j++) { //右下
+    for (; i < imax && j < jmax; i++, j++) { //右下
         if (gamedata[i][j] == null) {
             break;
         }
@@ -114,7 +116,7 @@ function testwinner(a, b) {
         }
     }
     i = a + 1, j = b - 1;
-    for (; i <= imax && 0 <= j; i++, j--) { //左下
+    for (; i < imax && 0 < j; i++, j--) { //左下
         if (gamedata[i][j] == null) {
             break;
         }
@@ -141,7 +143,7 @@ function testwinner(a, b) {
         }
     }
     i = a + 1, j = b;
-    for (; i <= imax; i++) { //右
+    for (; i < imax; i++) { //右
         if (gamedata[i][j] == null) {
             break;
         }
@@ -183,13 +185,30 @@ function testwinner(a, b) {
     }
     return false;
 }
-function stopthisgame() {
-    if (!confirm("确定要终止本轮游戏吗？棋盘数据将不会保存。")) {
-        return;
+function stopthisgame(frombtn) {
+    if (frombtn) {
+        if (!confirm("确定要终止本轮游戏吗？棋盘数据将不会保存。")) {
+            return;
+        }
+        document.getElementById("startbtn").disabled = false;
+        document.getElementById("stopbtn").disabled = true;
+        document.getElementById("sizex").disabled = false;
+        document.getElementById("sizey").disabled = false;
+        document.getElementById("qipan").innerHTML = "<tr><td>本轮游戏被主动终止，请重新开始游戏</td></tr>";
     }
-    document.getElementById("startbtn").disabled = false;
-    document.getElementById("stopbtn").disabled = true;
-    document.getElementById("sizex").disabled = false;
-    document.getElementById("sizey").disabled = false;
-    document.getElementById("qipan").innerHTML = "<tr><td>本轮游戏被主动终止，请重新开始游戏</td></tr>";
+    else {
+        var imax = parseInt(document.getElementById("sizey").value);
+        var jmax = parseInt(document.getElementById("sizex").value);
+        //遍历每一个表格（棋盘）的格子
+        for (var i = 1; i <= imax; i++) {
+            for (var j = 1; j <= jmax; j++) {
+                var td_element = document.getElementById(j + ',' + (imax - i + 1));
+                //下面这行代码：获取这一格的所有input子元素（是一个列表）
+                //如果长度(即元素个数)为1(也是true)(即未落子)就把按钮设为禁用(毕竟游戏已结束)
+                if (td_element.getElementsByTagName("INPUT").length) {
+                    td_element.getElementsByTagName("INPUT")[0].disabled = true;
+                }
+            }
+        }
+    }
 }

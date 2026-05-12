@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<!--version 1.3.0-->
+<!--version 1.3.1-->
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>五子棋v1.3.0</title>
+    <title>五子棋v1.3.1</title>
     <script src="JScode.js"></script>
     <style>
         #qipan {
@@ -29,7 +29,7 @@
     输入棋盘宽度：<input type="text" id="sizex"><br>
     输入棋盘高度：<input type="text" id="sizey"><br>
     <input type="button" id="startbtn" value="开始" onclick="load()"><hr>
-    <input type="button" id="stopbtn" value="终止本轮游戏" onclick="stopthisgame()" disabled><br><br>
+    <input type="button" id="stopbtn" value="终止本轮游戏" onclick="stopthisgame(true)" disabled><br><br>
     <table id="qipan"></table>
     <div>
         <b id="outplayerarea"></b>
