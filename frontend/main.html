@@ -1,15 +1,25 @@
 ﻿<!DOCTYPE html>
-<!--version 1.1.1-->
+<!--version 1.2.0-->
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>五子棋v1.1.1</title>
+    <title>五子棋v1.2.0</title>
     <script>
         var player = true;//true为黑，false为白，默认黑先
+        var gamedata = new Array();
         function load() { //生成棋盘，显示信息
             var i = 1, j = 1;
             var imax = parseInt(document.getElementById("sizey").value);
             var jmax = parseInt(document.getElementById("sizex").value);
+            console.log("imax=" + imax + ",jmax=" + jmax);
+            if (Number.isNaN(imax) || Number.isNaN(imax)) {
+                alert("输入的信息不是一个数字或是空值，请重试");
+                return;
+            }
+            if (imax > 50 || imax < 5 || jmax > 50 || jmax < 5) {
+                alert("输入的棋盘大小超出了范围(5~50)");
+                return;
+            }
             document.getElementById("startbtn").disabled = true;
             document.getElementById("stopbtn").disabled = false;
             document.getElementById("sizex").disabled = true;
@@ -17,21 +27,26 @@
             var outstr = "";
             for (i = 1; i <= imax; i++) {
                 outstr += "<tr>";
+                var childgamedata = new Array();
                 for (j = 1; j <= jmax; j++) {
-                    outstr += '<td id="' + j + ',' + (10 - i + 1) + '">';
-                    outstr += '<input type="button" value="落子" onclick="luozi(' + j + ',' + (10 - i + 1) + ')">';
+                    outstr += '<td id="' + j + ',' + (imax - i + 1) + '">';
+                    outstr += '<input type="button" value="落子" onclick="luozi(' + j + ',' + (imax - i + 1) + ')">';
                     outstr += '</td>';
+                    childgamedata.push(null);
                 }
                 outstr += "</tr>";
+                gamedata.push(childgamedata);
             }
             document.getElementById("qipan").innerHTML = outstr;
             outstr2 = '当前棋手: <span id="outplayer" style="color:#ff6a00;font-size:25px">黑</span>';
             player = true;
             document.getElementById("outplayerarea").innerHTML = outstr2;
+            console.log(gamedata);
         }
         function luozi(x, y) {
             var getblock = document.getElementById(x + "," + y);
             var outarea = document.getElementById("outplayer");
+            var imax = parseInt(document.getElementById("sizey").value);
             if (player) {
                 getblock.innerHTML = '<img src="black.png">';
                 outarea.innerHTML = "白";
@@ -40,7 +55,9 @@
                 getblock.innerHTML = '<img src="white.png">';
                 outarea.innerHTML = "黑";
             }
+            gamedata[x - 1][imax - y] = player;
             player = !player;
+            console.log(gamedata);
         }
         function stopthisgame() {
             if (!confirm("确定要终止本轮游戏吗？棋盘数据将不会保存。")) {
@@ -54,18 +71,18 @@
         }
     </script>
     <style>
-    #qipan {
-        border-collapse: collapse;
-    }
-    #qipan td {
-        border: 1px solid black;
-    }
-    #qipan td input{
-        margin: 2px;
-    }
-    #qipan td img{
-        margin: auto;
-    }
+        #qipan {
+            border-collapse: collapse;
+        }
+        #qipan td {
+            border: 1px solid black;
+        }
+        #qipan td input{
+            margin: 2px;
+        }
+        #qipan td img{
+            margin: auto;
+        }
     </style>
 </head>
 <body>
