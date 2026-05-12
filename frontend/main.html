@@ -1,9 +1,9 @@
 ﻿<!DOCTYPE html>
-<!--version 1.1.0-->
+<!--version 1.1.1-->
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>五子棋v1.1.0</title>
+    <title>五子棋v1.1.1</title>
     <script>
         var player = true;//true为黑，false为白，默认黑先
         function load() { //生成棋盘，显示信息
@@ -17,7 +17,7 @@
             var outstr = "";
             for (i = 1; i <= imax; i++) {
                 outstr += "<tr>";
-                for (j = 1; j < jmax; j++) {
+                for (j = 1; j <= jmax; j++) {
                     outstr += '<td id="' + j + ',' + (10 - i + 1) + '">';
                     outstr += '<input type="button" value="落子" onclick="luozi(' + j + ',' + (10 - i + 1) + ')">';
                     outstr += '</td>';
@@ -26,6 +26,7 @@
             }
             document.getElementById("qipan").innerHTML = outstr;
             outstr2 = '当前棋手: <span id="outplayer" style="color:#ff6a00;font-size:25px">黑</span>';
+            player = true;
             document.getElementById("outplayerarea").innerHTML = outstr2;
         }
         function luozi(x, y) {
