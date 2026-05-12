@@ -1,6 +1,7 @@
 ﻿var player = true;//true为黑，false为白，默认黑先
 var gamedata = new Array();
 function load() { //生成棋盘，显示信息
+    gamedata = new Array();
     var i = 1, j = 1;
     var imax = parseInt(document.getElementById("sizey").value);
     var jmax = parseInt(document.getElementById("sizex").value);
