@@ -2,13 +2,9 @@
 var gamedata = new Array();
 var isrunning = false;  //记录游戏是否在进行
 function outinfor() {
-    var outstr = "游戏版本：1.4.0\n\n更新内容：\n\n";
+    var outstr = "游戏版本：1.4.1\n\n更新内容：\n\n";
     outstr += "一、内容更新\n";
-    outstr += "1、更换更清晰的图片\n";
-    outstr += "2、现在无需结束游戏即可选择重新开始\n";
-    outstr += "3、现在重新开始游戏时，上一局的胜利消息会被隐藏\n";
-    outstr += "4、取消了游戏结束时的弹窗（该功能在电脑端体验不好）\n";
-    outstr += "5、点击标题可以查看新版特性\n\n";
+    outstr += "1、现在棋盘大小输入框不会被禁用。\n\n";
     outstr += "二、技术性更改\n";
     outstr += "无";
     alert(outstr);
@@ -38,8 +34,6 @@ function load() { //生成棋盘，显示信息
         alert("输入的棋盘大小超出了范围(5~50)");
         return;
     }
-    document.getElementById("sizex").disabled = true;
-    document.getElementById("sizey").disabled = true;
     var outstr = "";
     for (i = 1; i <= imax; i++) {
         outstr += "<tr>";
