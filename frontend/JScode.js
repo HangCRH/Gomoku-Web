@@ -4,9 +4,9 @@ var isrunning = false;  //记录游戏是否在进行
 var gamehistory = new Array();
 var playtimes = 0;  //记录本局游戏回合数（黑白各下一子算一回合，不足一回合算一回合）
 function outinfor() {
-    var outstr = "游戏版本：1.4.2\n\n更新内容：\n\n";
+    var outstr = "游戏版本：1.4.3\n\n更新内容：\n\n";
     outstr += "一、内容更新\n";
-    outstr += "1、新增对局回顾功能。\n\n";
+    outstr += "1、修复Bug：在白方获胜时对局历史显示的获胜者是undefined。\n\n";
     outstr += "二、技术性更改\n";
     outstr += "无";
     alert(outstr);
@@ -24,11 +24,11 @@ function showHistory() {
     }
     alert(outstr);
 }
-class History {
+class GameHistory { //游戏历史类
     constructor(times, winner) {
         this.times = times;
         this.winner = winner;
-        if (winner != "black" && winner != "white") {
+        if (winner != "black" && winner != "white") {   //如果传入的获胜者参数不合法，则视为游戏被主动结束，无获胜者
             this.winner = null;
         }
     }
@@ -37,9 +37,9 @@ class History {
         if (this.winner === null) {
             returnString += "游戏被主动结束，无获胜者";
         } else {
-            const playerEnToZh = {
+            const playerEnToZh = {  //英文转中文映射
                 black: "黑",
-                while: "白"
+                white: "白"         //fuck
             }
             returnString += "获胜者：" + playerEnToZh[this.winner];
         }
@@ -48,7 +48,7 @@ class History {
     }
 }
 function summonHistory(winnercolor) {
-    var newHistoryData = new History(playtimes, winnercolor);
+    var newHistoryData = new GameHistory(playtimes, winnercolor);
     return newHistoryData;
 }
 function startgame() {
@@ -124,14 +124,14 @@ function luozi(x, y) {
     if (winner && player) {
         document.getElementById("outarea2").innerHTML = "黑方最后落子，取得胜利！";
         outarea.innerHTML = player ? "黑" : "白";
-        gamehistory.push(summonHistory("black"));
+        gamehistory.push(summonHistory("black"));   //记录本局游戏结果
         stopthisgame();
         return;
     }
     if (winner && !player) {
         document.getElementById("outarea2").innerHTML = "白方最后落子，取得胜利！";
         outarea.innerHTML = player ? "黑" : "白";
-        gamehistory.push(summonHistory("white"));
+        gamehistory.push(summonHistory("white"));   //记录本局游戏结果
         stopthisgame();
         return;
     }
