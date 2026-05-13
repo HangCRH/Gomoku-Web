@@ -2,9 +2,25 @@
 <html lang="zh">
 <head>
     <meta charset="utf-8">
-    <title>五子棋v1.3.2</title>
+    <title>五子棋v1.4.0</title>
     <script src="JScode.js"></script>
     <style>
+        #title:link {
+            text-decoration-line: none;
+            color: #000000;
+        }
+        #title:visited {
+            text-decoration-line: none;
+            color: #000000;
+        }
+        #title:hover {
+            text-decoration-line: underline;
+            color: #000000;
+        }
+        #title:active {
+            text-decoration-line: underline;
+            color: #222222;
+        }
         #qipan {
             border-collapse: collapse;
         }
@@ -24,11 +40,10 @@
     </style>
 </head>
 <body>
-    <b style="font-size:25px;">五子棋</b><hr>
+    <a id="title" style="font-size:25px;" href="javascript:void(0)" onclick="outinfor()">五子棋</a><hr>
     输入棋盘宽度：<input type="text" id="sizex"><br>
     输入棋盘高度：<input type="text" id="sizey"><br>
-    <input type="button" id="startbtn" value="开始" onclick="load()"><hr>
-    <input type="button" id="stopbtn" value="终止本轮游戏" onclick="stopthisgame(true)" disabled><br><br>
+    <input type="button" id="startbtn" value="开始" onclick="startgame()"><hr>
     <table id="qipan"></table>
     <div>
         <b id="outplayerarea"></b>

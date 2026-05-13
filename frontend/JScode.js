@@ -1,5 +1,29 @@
-﻿var player = true;//true为黑，false为白，默认黑先
+﻿var player = true;  //true为黑，false为白，默认黑先
 var gamedata = new Array();
+var isrunning = false;  //记录游戏是否在进行
+function outinfor() {
+    var outstr = "游戏版本：1.4.0\n\n更新内容：\n\n";
+    outstr += "一、内容更新\n";
+    outstr += "1、更换更清晰的图片\n";
+    outstr += "2、现在无需结束游戏即可选择重新开始\n";
+    outstr += "3、现在重新开始游戏时，上一局的胜利消息会被隐藏\n";
+    outstr += "4、取消了游戏结束时的弹窗（该功能在电脑端体验不好）\n";
+    outstr += "5、点击标题可以查看新版特性\n\n";
+    outstr += "二、技术性更改\n";
+    outstr += "无";
+    alert(outstr);
+}
+function startgame() {
+    if (isrunning) {
+        if (confirm("确定要终止本轮游戏，并开启新的一局吗？")) {
+            load();
+        } else {
+            return;
+        }
+    } else {
+        load();
+    }
+}
 function load() { //生成棋盘，显示信息
     gamedata = new Array();
     var i = 1, j = 1;
@@ -14,8 +38,6 @@ function load() { //生成棋盘，显示信息
         alert("输入的棋盘大小超出了范围(5~50)");
         return;
     }
-    document.getElementById("startbtn").disabled = true;
-    document.getElementById("stopbtn").disabled = false;
     document.getElementById("sizex").disabled = true;
     document.getElementById("sizey").disabled = true;
     var outstr = "";
@@ -35,7 +57,9 @@ function load() { //生成棋盘，显示信息
     outstr2 = '当前棋手: <span id="outplayer" style="color:#ff6a00;font-size:25px">黑</span>';
     player = true;
     document.getElementById("outplayerarea").innerHTML = outstr2;
+    document.getElementById("outarea2").innerHTML = "";
     console.log(gamedata);
+    isrunning = true;
 }
 function luozi(x, y) {
     //落子
@@ -57,17 +81,15 @@ function luozi(x, y) {
     //胜负检测
     var winner = testwinner(imax - y, x - 1);
     if (winner && player) {
-        alert("黑方赢了！");
         document.getElementById("outarea2").innerHTML = "黑方最后落子，取得胜利！";
         outarea.innerHTML = player ? "黑" : "白";
-        stopthisgame(false);
+        stopthisgame();
         return;
     }
     if (winner && !player) {
-        alert("白方赢了！");
         document.getElementById("outarea2").innerHTML = "白方最后落子，取得胜利！";
         outarea.innerHTML = player ? "黑" : "白";
-        stopthisgame(false);
+        stopthisgame();
         return;
     }
     player = !player;
@@ -186,30 +208,19 @@ function testwinner(a, b) {
     }
     return false;
 }
-function stopthisgame(frombtn) {
-    if (frombtn) {
-        if (!confirm("确定要终止本轮游戏吗？棋盘数据将不会保存。")) {
-            return;
-        }
-        document.getElementById("startbtn").disabled = false;
-        document.getElementById("stopbtn").disabled = true;
-        document.getElementById("sizex").disabled = false;
-        document.getElementById("sizey").disabled = false;
-        document.getElementById("qipan").innerHTML = "<tr><td>本轮游戏被主动终止，请重新开始游戏</td></tr>";
-    }
-    else {
-        var imax = parseInt(document.getElementById("sizey").value);
-        var jmax = parseInt(document.getElementById("sizex").value);
-        //遍历每一个表格（棋盘）的格子
-        for (var i = 1; i <= imax; i++) {
-            for (var j = 1; j <= jmax; j++) {
-                var td_element = document.getElementById(j + ',' + (imax - i + 1));
-                //下面这行代码：获取这一格的所有input子元素（是一个列表）
-                //如果长度(即元素个数)为1(也是true)(即未落子)就把按钮设为禁用(毕竟游戏已结束)
-                if (td_element.getElementsByTagName("INPUT").length) {
-                    td_element.getElementsByTagName("INPUT")[0].disabled = true;
-                }
+function stopthisgame() {
+    var imax = parseInt(document.getElementById("sizey").value);
+    var jmax = parseInt(document.getElementById("sizex").value);
+    //遍历每一个表格（棋盘）的格子
+    for (var i = 1; i <= imax; i++) {
+        for (var j = 1; j <= jmax; j++) {
+            var td_element = document.getElementById(j + ',' + (imax - i + 1));
+            //下面这行代码：获取这一格的所有input子元素（是一个列表）
+            //如果长度(即元素个数)为1(也是true)(即未落子)就把按钮设为禁用(毕竟游戏已结束)
+            if (td_element.getElementsByTagName("INPUT").length) {
+                td_element.getElementsByTagName("INPUT")[0].disabled = true;
             }
         }
     }
+    isrunning = false;
 }
