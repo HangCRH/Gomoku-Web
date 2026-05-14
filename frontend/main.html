@@ -5,59 +5,19 @@
     <meta charset="utf-8">
     <title>五子棋</title>
     <script src="JScode.js"></script>
-    <style>
-        #title:link {
-            text-decoration-line: none;
-            color: #000000;
-        }
-
-        #title:visited {
-            text-decoration-line: none;
-            color: #000000;
-        }
-
-        #title:hover {
-            text-decoration-line: underline;
-            color: #000000;
-        }
-
-        #title:active {
-            text-decoration-line: underline;
-            color: #222222;
-        }
-
-        #qipan {
-            border-collapse: collapse;
-        }
-
-        #qipan td {
-            border: 1px solid black;
-        }
-
-        #qipan td input {
-            margin: 2px;
-        }
-
-        #qipan td img {
-            margin: auto;
-        }
-
-        #outarea2 {
-            color: #ff4c13;
-            font-size: 40px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <a id="title" style="font-size:25px;" href="javascript:void(0)" onclick="outinfor()">五子棋</a>
+    <b id="title" style="font-size:25px;" onclick="outinfor()">五子棋</b>
     <hr>
-    输入棋盘宽度：<input type="text" id="sizex"><br>
-    输入棋盘高度：<input type="text" id="sizey"><br>
+    <div id="setChessboard">
+        输入棋盘宽度：<input type="text" id="sizex"><br>
+        输入棋盘高度：<input type="text" id="sizey"><br>
+    </div>
     <input type="button" id="startbtn" value="开始" onclick="startgame()">&nbsp;
     <input type="button" value="对局历史" onclick="showHistory()">
-    <hr>
-    <table id="qipan"></table>
+    <table id="chessboard"></table>
     <div>
         <b id="outplayerarea"></b>
     </div>

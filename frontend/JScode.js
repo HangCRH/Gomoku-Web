@@ -3,14 +3,16 @@ var gamedata = new Array();
 var isrunning = false;  //记录游戏是否在进行
 var gamehistory = new Array();
 var playtimes = 0;  //记录本局游戏回合数（黑白各下一子算一回合，不足一回合算一回合）
+
 function outinfor() {
-    var outstr = "游戏版本：1.4.3\n\n更新内容：\n\n";
+    var outstr = "游戏版本：2.0.0\n\n更新内容：\n\n";
     outstr += "一、内容更新\n";
     outstr += "1、修复Bug：在白方获胜时对局历史显示的获胜者是undefined。\n\n";
     outstr += "二、技术性更改\n";
     outstr += "无";
     alert(outstr);
 }
+
 function showHistory() {
     var outstr = "对局历史：\n\n";
     if (gamehistory.length <= 0) {
@@ -24,6 +26,7 @@ function showHistory() {
     }
     alert(outstr);
 }
+
 class GameHistory { //游戏历史类
     constructor(times, winner) {
         this.times = times;
@@ -47,10 +50,12 @@ class GameHistory { //游戏历史类
         return returnString;
     }
 }
+
 function summonHistory(winnercolor) {
     var newHistoryData = new GameHistory(playtimes, winnercolor);
     return newHistoryData;
 }
+
 function startgame() {
     if (isrunning) {
         if (confirm("确定要终止本轮游戏，并开启新的一局吗？")) {
@@ -66,6 +71,7 @@ function startgame() {
         load();
     }
 }
+
 function load() { //生成棋盘，显示信息
     gamedata = new Array();
     playtimes = 1;
@@ -87,14 +93,14 @@ function load() { //生成棋盘，显示信息
         var childgamedata = new Array();
         for (j = 1; j <= jmax; j++) {
             outstr += '<td id="' + j + ',' + (imax - i + 1) + '">';
-            outstr += '<input type="button" value="落子" onclick="luozi(' + j + ',' + (imax - i + 1) + ')">';
+            outstr += '<input type="button" value="落子" onclick="makeMove(' + j + ',' + (imax - i + 1) + ')">';
             outstr += '</td>';
             childgamedata.push(null);
         }
         outstr += "</tr>";
         gamedata.push(childgamedata);
     }
-    document.getElementById("qipan").innerHTML = outstr;
+    document.getElementById("chessboard").innerHTML = outstr;
     var outstr2 = '当前棋手: <span id="outplayer" style="color:#ff6a00;font-size:25px">黑</span>';
     player = true;
     document.getElementById("outplayerarea").innerHTML = outstr2;
@@ -102,7 +108,8 @@ function load() { //生成棋盘，显示信息
     console.log(gamedata);
     isrunning = true;
 }
-function luozi(x, y) {
+
+function makeMove(x, y) {
     //落子
     var getblock = document.getElementById(x + "," + y);
     var outarea = document.getElementById("outplayer");
@@ -141,6 +148,7 @@ function luozi(x, y) {
     }
     outarea.innerHTML = outstring;
 }
+
 function testwinner(a, b) {
     console.log("a=" + a + ",b=" + b);
     //左上至右下五子判定
@@ -254,6 +262,7 @@ function testwinner(a, b) {
     }
     return false;
 }
+
 function stopthisgame() {
     var imax = parseInt(document.getElementById("sizey").value);
     var jmax = parseInt(document.getElementById("sizex").value);

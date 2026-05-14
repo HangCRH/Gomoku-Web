@@ -1,0 +1,29 @@
+body {
+    text-align: center;
+}
+
+#setChessboard {
+    margin-bottom: 5px;
+}
+
+#chessboard {
+    border-collapse: collapse;
+    margin: 5px auto 0 auto;
+}
+
+#chessboard td {
+    border: 1px solid black;
+}
+
+#chessboard td input {
+    margin: 2px;
+}
+
+#chessboard td img {
+    margin: auto;
+}
+
+#outarea2 {
+    color: #ff4c13;
+    font-size: 40px;
+}
