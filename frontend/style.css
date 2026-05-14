@@ -13,6 +13,7 @@ body {
 
 #chessboard td {
     border: 1px solid black;
+    padding: 0;
 }
 
 #chessboard td input {
@@ -21,6 +22,7 @@ body {
 
 #chessboard td img {
     margin: auto;
+    display: block;
 }
 
 #outarea2 {

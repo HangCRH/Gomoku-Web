@@ -93,7 +93,7 @@ function load() { //生成棋盘，显示信息
         var childgamedata = new Array();
         for (j = 1; j <= jmax; j++) {
             outstr += '<td id="' + j + ',' + (imax - i + 1) + '">';
-            outstr += '<input type="button" value="落子" onclick="makeMove(' + j + ',' + (imax - i + 1) + ')">';
+            outstr += '<img src="pic/empty.png" onclick="makeMove(' + j + ',' + (imax - i + 1) + ')">';
             outstr += '</td>';
             childgamedata.push(null);
         }
@@ -111,17 +111,20 @@ function load() { //生成棋盘，显示信息
 
 function makeMove(x, y) {
     //落子
+    if (!isrunning) {
+        return; //游戏结束后禁止落子，由于img不能被禁用，只能在这里禁用落子功能
+    }
     var getblock = document.getElementById(x + "," + y);
     var outarea = document.getElementById("outplayer");
     outarea.innerHTML = "加载中";
     var imax = parseInt(document.getElementById("sizey").value);
     var outstring;
     if (player) {
-        getblock.innerHTML = '<img src="black.png">';
+        getblock.innerHTML = '<img src="pic/black.png">';
         outstring = "白";
 
     } else {
-        getblock.innerHTML = '<img src="white.png">';
+        getblock.innerHTML = '<img src="pic/white.png">';
         outstring = "黑";
     }
     gamedata[imax - y][x - 1] = player;
@@ -264,18 +267,5 @@ function testwinner(a, b) {
 }
 
 function stopthisgame() {
-    var imax = parseInt(document.getElementById("sizey").value);
-    var jmax = parseInt(document.getElementById("sizex").value);
-    //遍历每一个表格（棋盘）的格子
-    for (var i = 1; i <= imax; i++) {
-        for (var j = 1; j <= jmax; j++) {
-            var td_element = document.getElementById(j + ',' + (imax - i + 1));
-            //下面这行代码：获取这一格的所有input子元素（是一个列表）
-            //如果长度(即元素个数)为1(也是true)(即未落子)就把按钮设为禁用(毕竟游戏已结束)
-            if (td_element.getElementsByTagName("INPUT").length) {
-                td_element.getElementsByTagName("INPUT")[0].disabled = true;
-            }
-        }
-    }
     isrunning = false;
 }
