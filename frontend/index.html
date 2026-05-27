@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五子棋</title>
+    <script src="online.js"></script>
+    <script src="offline.js"></script>
+    <script src="main.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <b id="title" style="font-size:25px;" onclick="outinfor()">五子棋</b>
+    <hr>
+    <div id="setChessboard">
+        <label>输入棋盘宽度：<input type="text" id="sizex" onblur="writeChessboardSize()"></label><br>
+        <label>输入棋盘高度：<input type="text" id="sizey" onblur="writeChessboardSize()"></label><br>
+        选择预设棋盘大小：
+        <select id="presetChessboardSelect" onchange="usePresetChessboard()">
+            <option value="10x10">10 x 10</option>
+            <option value="15x15">15 x 15</option>
+            <option value="20x20">20 x 20</option>
+            <option value="selfSet" selected>自定义</option>
+        </select>
+    </div>
+    <select id="gamemode">
+        <option value="offline">离线模式</option>
+        <option value="online">在线模式</option>
+    </select>&nbsp;
+    <input type="button" id="startbtn" value="开始" onclick="startgame()">&nbsp;
+    <input type="button" value="对局历史" onclick="showHistory()">
+    <div id="chessboard"></div>
+    <div>
+        <b id="outplayerarea"></b>
+    </div>
+    <div>
+        <b id="outarea2"></b>
+    </div>
+    <div id="popupBackground" style="display:none;"></div>
+    <iframe id="popupFrame" style="display:none;"></iframe>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五子棋</title>
+    <script src="main.js"></script>
+    <script src="gui.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <input type="button" value="返回" onclick="closeRoomSelectPage()">
+    <h2>加入房间</h2>
+    <div>
+        <label>房间号：<input type="text" id="roomIdInput"></label><br>
+        <label>昵称：<input type="text" id="playerNameInput"></label><br>
+        <button onclick="joinRoom()">加入房间</button>
+    </div>
+    <hr>
+    <h2>创建房间</h2>
+    <div>
+        <label>昵称：<input type="text" id="createPlayerNameInput"> </label><br>
+        <div id="setChessboard">
+            <label>输入棋盘宽度：<input type="text" id="sizex" onblur="writeChessboardSize()"></label><br>
+            <label>输入棋盘高度：<input type="text" id="sizey" onblur="writeChessboardSize()"></label><br>
+            选择预设棋盘大小：
+            <select id="presetChessboardSelect" onchange="usePresetChessboard()">
+                <option value="10x10">10 x 10</option>
+                <option value="15x15">15 x 15</option>
+                <option value="20x20">20 x 20</option>
+                <option value="selfSet" selected>自定义</option>
+            </select>
+        </div>
+        <button onclick="createRoom()">创建房间</button>
+    </div>
+</body>
+
+</html>
